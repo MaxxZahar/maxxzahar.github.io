@@ -1,0 +1,183 @@
+.field-and-order{
+    display: grid;
+    grid-template-columns: 95% 5%;
+}
+.field{
+    display: grid;
+    background: #e7f8d4;
+    grid-template-columns: 5% 10% 15% 15% 15% 15% 10% 5%;
+    margin: 3vw 10% 3vw 10%;
+    row-gap: 3vw;
+    padding: 2vw;
+    column-gap: 1vw;
+    border-radius: 5%;
+    border: palegreen solid 5px;
+}
+.players-order-list{
+    margin: 11.5vw 10% 3vw 0;
+}
+.players-order-list-item{
+    font-size: 2vw;
+    text-align: center;
+    padding: 3px 0;
+    cursor: pointer;
+}
+.ball{
+    position: absolute;
+    border-radius: 50%;
+    width: 1vw;
+    height: 1vw;
+    background-color: #f00;
+    border: 0.25vw solid #ff0;
+    display: none;
+}
+.position{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+}
+.left-position, .right-position, .goalie-position{
+    border-radius: 50%;
+    border: 1px solid #000;
+    width: 5vw;
+    height: 5vw;
+    line-height: 5vw;
+    text-align: center;
+    font-size: 3vw;
+}
+.goalie-position{
+    justify-self: center;
+}
+.goal{
+    width: 0.5vw;
+    height: 21vw;
+    background-color: #000;
+    position: relative;
+}
+.goal:not(:last-child){
+    justify-self: end;
+}
+.goal:not(:last-child)::before, .goal:not(:last-child)::after, .goal:last-child::before, .goal:last-child::after{
+    content: "";
+    position: absolute;
+    height: 0.5vw;
+    width: 2.5vw;
+    background-color: #000;
+}
+.goal:not(:last-child)::before{
+    top: 0;
+    right: -2.5vw;
+}
+.goal:not(:last-child)::after{
+    bottom: 0;
+    right: -2.5vw;
+}
+.goal:last-child::before{
+    top: 0;
+    right: 0.5vw;
+}
+.goal:last-child::after{
+    bottom: 0;
+    right: 0.5vw;
+}
+.aokk-fedd{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 700;
+    background-color: #000;
+    color: #fff;
+}
+.dequeller{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: 700;
+    background-color: greenyellow;
+    color: orange;
+    text-shadow: 1px 1px 0px black;
+}
+.options{
+    display: flex;
+    justify-content: space-around;
+}
+.move-options, .pass-options, .table{
+    width: 25%;
+    margin: 0 auto 3vw auto;
+    background-color: palegreen;
+    display: none;
+}
+.table{
+    display: flex;
+    flex-wrap: wrap;
+}
+.move-option, .pass-option, .time-counter{
+    text-align: center;
+    height: 2vw;
+    line-height: 2vw;
+    font-style: italic;
+    cursor: pointer;
+    font-weight: 600;
+    color: #000;
+}
+.pass-hover:hover{
+    background-color: cyan;
+    opacity: 0.2;
+}
+.next-button{
+    width: 10%;
+    margin: 0 auto 3vw auto;
+    height: 3vw;
+    line-height: 3vw;
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 2vw;
+    background-color: palegreen;
+    color: #000;
+    border-radius: 20%;
+    text-align: center;
+    padding: 5px;
+}
+.team{
+    width: 80%;
+    font-size: 3vw;
+    line-height: 3vw;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+.score{
+    width: 20%;
+    font-size: 3vw;
+    line-height: 3vw;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+.time-counter{
+    width: 100%;
+    font-size: 3vw;
+    line-height: 3vw;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    height: 3vw;
+}
+.player-card{
+    background-color: red;
+    opacity: 0.7;
+    width: 9%;
+    border-radius: 10%;
+    display: none;
+    position: absolute;
+    top: 12vw;
+    right: 5.75vw;
+    z-index: 2;
+    cursor: pointer;
+}
+.player-card-item{
+    text-align: center;
+    line-height: 100%;
+    font-weight: 900;
+    font-family: Arial;
+    height: 3vw;
+    padding: 5px 0;
+    font-size: 2vw;
+}
