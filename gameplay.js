@@ -162,27 +162,132 @@ function shot(location, number, team){
     fieldPositions[newBallPosition].querySelector('.ball').style.display = 'block';
 }
 
+function blockOthers(number){
+    for (let i = 0; i < bothTeamsPlayersPositions.length; i++){
+        if (bothTeamsPlayersPositions[i].textContent !== number){
+            bothTeamsPlayersPositions[i].style.pointerEvents = "none";
+        }
+    }
+}
+
+function unblockOthers(number){
+    for (let i = 0; i < bothTeamsPlayersPositions.length; i++){
+        if (bothTeamsPlayersPositions[i].textContent !== number){
+            bothTeamsPlayersPositions[i].style.pointerEvents = "auto";
+        }
+    }
+}
+
+function toNextPlayer(state){
+    const currentPlayerPosition = field.querySelector('.active');
+    const bothTeamsPlayersPositions = field.querySelectorAll('.player');
+    currentPlayerPosition.classList.remove('active');
+    if (state < playersSortedByReaction.length){
+        const nextPlayerNumber = playersSortedByReaction[state].number;
+        for (let i = 0; i < bothTeamsPlayersPositions.length; i++){
+            if (bothTeamsPlayersPositions[i].textContent === nextPlayerNumber){
+                bothTeamsPlayersPositions[i].classList.add('active');
+            }
+        }
+        const nextPlayerPosition = field.querySelector('.active');
+        if (nextPlayerPosition.classList.contains('aokk-fedd')){
+            nextPlayerPosition.addEventListener('click', forLeftEventListener);
+        } else {
+            nextPlayerPosition.addEventListener('click', forRightEventListener);
+        }
+    } else {
+        state = 0;
+        next.style.cursor = "pointer";
+        next.style.pointerEvents = "auto";
+    }
+    return state;
+}
+
 let minute = Number(document.querySelector('.time-counter').dataset.time);
 const next = document.querySelector('.next-button');
+const start = document.querySelector('.start-button');
+let state = 0;
+// const operationDone = new Promise((resolve, reject) => {
+//     if (state === 1){
+//         console.log("resolve");
+//         resolve(0);
+//     }
+// });
+// operationDone.then(function(value){
+//     console.log("then");
+//     state = value;
+// })
+
+// next.addEventListener('click', function(){
+//     console.log("N");
+//     minute++;
+//     const leftTeamPlayersPositions = field.querySelectorAll('.aokk-fedd');
+//     const rightTeamPlayersPositions = field.querySelectorAll('.dequeller');
+//     for (let i = 0; i < leftTeamPlayersPositions.length; i++){
+//         leftTeamPlayersPositions[i].addEventListener('click', forLeftEventListener);
+//     }
+
+//     for (let i = 0; i < rightTeamPlayersPositions.length; i++){
+//         rightTeamPlayersPositions[i].addEventListener('click', forRightEventListener);
+//     }
+//     document.querySelector('.time-counter').textContent = minute + "\'";
+//     for (let i = 0; i < playersSortedByReaction.length; i++){
+//         const currentPlayerNumber = playersSortedByReaction[i].number;
+//         for (let j = 0; j < bothTeamsPlayersPositions.length; j++){
+//             if (bothTeamsPlayersPositions[j].textContent === currentPlayerNumber){
+//                 bothTeamsPlayersPositions[j].classList.add('current');
+//             }
+//         }
+//         const currentPlayerPosition = field.querySelector('.current');
+//         currentPlayerPosition.classList.add('active');
+//         currentPlayerPosition.classList.remove('current');
+//         // blockOthers(currentPlayerNumber);
+//         const toMakeAMove = async() => {
+//             console.log("waiting");
+//             await operationDone;
+//             unblockOthers(currentPlayerNumber);
+//             currentPlayerPosition.classList.remove('active');
+//         }
+//         toMakeAMove();
+//     }
+// });
+
+// next.addEventListener('click', function(){
+//     next.style.cursor = "none";
+//     next.style.pointerEvents = "none";
+//     for (let i = 0; i < playersSortedByReaction.length; i++){
+//         const number = playersSortedByReaction[i].number;
+//         const leftTeamPlayers = field.querySelectorAll('.aokk-fedd');
+//         const rightTeamPlayers = field.querySelectorAll('.dequeller');
+//         for (let j = 0; j < leftTeamPlayers.length; j++){
+//             if (leftTeamPlayers[j].textContent === number){
+//                 const currentPlayer = leftTeamPlayers[j];
+//                 currentPlayer.addEventListener('click', forLeftEventListener);
+//             }
+//         }
+//     }
+// });
 
 next.addEventListener('click', function(){
     console.log("N");
     minute++;
-    const leftTeamPlayers = field.querySelectorAll('.aokk-fedd');
-    const rightTeamPlayers = field.querySelectorAll('.dequeller');
-
-
-    for (let i = 0; i < leftTeamPlayers.length; i++){
-        leftTeamPlayers[i].addEventListener('click', forLeftEventListener);
+    next.style.cursor = "auto";
+    next.style.pointerEvents = "none";
+    const bothTeamsPlayersPositions = field.querySelectorAll('.player');
+    const firstPlayerNumber = playersSortedByReaction[0].number;
+    for (let i = 0; i < bothTeamsPlayersPositions.length; i++){
+        if (bothTeamsPlayersPositions[i].textContent === firstPlayerNumber){
+            bothTeamsPlayersPositions[i].classList.add('active');
+        }
     }
-
-    for (let i = 0; i < rightTeamPlayers.length; i++){
-        rightTeamPlayers[i].addEventListener('click', forRightEventListener);
-    }
+    const firstPlayerPosition = field.querySelector('.active');
     document.querySelector('.time-counter').textContent = minute + "\'";
+    if (firstPlayerPosition.classList.contains('aokk-fedd')){
+        firstPlayerPosition.addEventListener('click', forLeftEventListener);
+    } else {
+        firstPlayerPosition.addEventListener('click', forRightEventListener);
+    }
 });
-
-
 
 function forLeftEventListener(){
     console.log("ML2");
@@ -208,6 +313,8 @@ function forLeftEventListener(){
     passOptionsBlockItems[0].addEventListener('click', passOptionsListener);
     passOptionsBlockItems[1].addEventListener('click', shotListener);
     this.removeEventListener('click', forLeftEventListener);
+    // state = 1;
+    // console.log(state);
 }
 
 function moveOptionsLeftListener(){
@@ -221,7 +328,9 @@ function moveOptionsLeftListener(){
     }
     moveOptionsBlock.style.display = "none";
     passOptionsBlock.style.display = "none";
-    playerCard.style.display = "none";
+    state++;
+    state = toNextPlayer(state);
+    // playerCard.style.display = "none";
 }
 
 function forRightEventListener(){
@@ -254,6 +363,8 @@ function moveOptionsRightListener(){
     }
     moveOptionsBlock.style.display = "none";
     passOptionsBlock.style.display = "none";
+    state++;
+    state = toNextPlayer(state);
 }
 
 function passOptionsListener(){
@@ -277,7 +388,7 @@ function passOptionsListener(){
     this.removeEventListener('click', passOptionsListener);
     moveOptionsBlock.style.display = "none";
     passOptionsBlock.style.display = "none";
-    playerCard.style.display = "none";
+    // playerCard.style.display = "none";
 }
 
 function passHover(){
@@ -309,6 +420,8 @@ function passListener(){
             fieldPositions[i].querySelector('.right-position').classList.remove('pass-hover');
         }
     }
+    state++;
+    state = toNextPlayer(state);
 }
 
 function shotListener(){
@@ -327,5 +440,7 @@ function shotListener(){
     // pass.removeEventListener('click', passOptionsListener);
     moveOptionsBlock.style.display = "none";
     passOptionsBlock.style.display = "none";
-    playerCard.style.display = "none";
+    // playerCard.style.display = "none";
+    state++;
+    state = toNextPlayer(state);
 }

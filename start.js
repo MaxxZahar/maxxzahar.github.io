@@ -6,6 +6,7 @@ const totalTeamPlayers = 8;
 const team1Players = team1.slice(1, -1);
 const team2Players = team2.slice(1, -1);
 const bothTeamsPlayers = team1Players.concat(team2Players);
+const gameLength = 100;
 
 goalies[0].textContent = team1[0].number;
 goalies[0].classList.add('aokk-fedd','player');
