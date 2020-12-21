@@ -1,6 +1,6 @@
 .field-and-order{
     display: grid;
-    grid-template-columns: 95% 5%;
+    grid-template-columns: 92% 8%;
 }
 .field{
     display: grid;
@@ -14,13 +14,33 @@
     border: palegreen solid 5px;
 }
 .players-order-list{
-    margin: 11.5vw 10% 3vw 0;
+    position: relative; 
+    margin: 11.5vw 5% 3vw 0;
+}
+.players-order-list-item-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+.order-counter{
+    border-radius: 50%;
+    width: 1vw;
+    height: 1vw;
+    background-color: #f00;
+    border: 0.25vw solid purple;
+    display: none;
+    align-self: center;
+    margin-right: 1px;
 }
 .players-order-list-item{
+    /* position: relative;  */
     font-size: 2vw;
     text-align: center;
     padding: 3px 0;
     cursor: pointer;
+    width: 5vw;
+    height: 2.5vw;
+    /* line-height: 100%; */
 }
 .ball{
     position: absolute;
@@ -28,7 +48,7 @@
     width: 1vw;
     height: 1vw;
     background-color: #f00;
-    border: 0.25vw solid #ff0;
+    border: 0.25vw solid purple;
     display: none;
 }
 .position{
@@ -168,7 +188,7 @@
     display: none;
     position: absolute;
     top: 12vw;
-    right: 5.75vw;
+    right: 8.25vw;
     z-index: 2;
     cursor: pointer;
 }

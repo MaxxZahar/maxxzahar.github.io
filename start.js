@@ -46,8 +46,11 @@ const playersSortedByReaction = bothTeamsPlayers.sort((a, b) => (a.reaction > b.
 const playersList = document.querySelector('.players-order-list');
 
 for (let i = 0; i < totalTeamPlayers; i++){
-    playersList.insertAdjacentHTML('beforeend', '<div class="players-order-list-item"></div>');
+    playersList.insertAdjacentHTML('beforeend', '<div class="players-order-list-item-container"><div class="order-counter"></div><div class="players-order-list-item"></div></div>');
 }
+
+// playersList.insertAdjacentHTML('beforeend', '<div class="order-counter"></div>');
+const orderCounters = document.querySelectorAll('.order-counter');
 
 const playersListItems = document.querySelectorAll('.players-order-list-item');
 
