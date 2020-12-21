@@ -202,7 +202,6 @@ function toNextPlayer(state){
         state = 0;
         next.style.cursor = "pointer";
         next.style.pointerEvents = "auto";
-        orderCounters[state].style.display = "block";
     }
     return state;
 }
