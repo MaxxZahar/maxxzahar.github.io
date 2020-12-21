@@ -195,10 +195,14 @@ function toNextPlayer(state){
         } else {
             nextPlayerPosition.addEventListener('click', forRightEventListener);
         }
+        orderCounters[state - 1].style.display = "none";
+        orderCounters[state].style.display = "block";
     } else {
+        orderCounters[state - 1].style.display = "none";
         state = 0;
         next.style.cursor = "pointer";
         next.style.pointerEvents = "auto";
+        orderCounters[state].style.display = "block";
     }
     return state;
 }
@@ -287,6 +291,7 @@ next.addEventListener('click', function(){
     } else {
         firstPlayerPosition.addEventListener('click', forRightEventListener);
     }
+    orderCounters[0].style.display = "block";
 });
 
 function forLeftEventListener(){
