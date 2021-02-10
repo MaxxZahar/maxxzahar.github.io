@@ -1,7 +1,3 @@
-<?php
-ob_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,18 +16,38 @@ ob_start();
     <?php
     session_start();
     if (!isset($_SESSION['loggedin'])) {
-      header("Location: needtorl.php");
+      header("Location: http://localhost/test/needtorl.php");
       exit;
     }
     $UserID = $_SESSION['id'];
     $UserID = strval($UserID);
-    $db = 'host1823062';
-    $user = 'host1823062';
-    $pass = 'Ny0B9MXAEm';
-    $db = new mysqli('localhost', $user, $pass, $db) or die("Unable to connect");
-    $res = $db->query('SELECT * FROM `datahands` WHERE UserID = "' . $UserID . '"');
+    $user = 'root';
+    $pass = '';
+    $db = 'bridgedb';
+    ?>
+    <div class="folder-grid" data-id="<?php echo $UserID ?>">
+      <?php
+      $conn = mysqli_connect('localhost', $user, $pass, $db);
+      if (mysqli_connect_errno()) {
+        exit('Failed to connect: ' . mysqli_connect_error());
+      }
+      $query = "SELECT DISTINCT Folder FROM datahands WHERE UserID = '$UserID'";
+      $res = $conn->query($query);
+      if (!$res) {
+        die(htmlspecialchars($conn->error));
+      } else {
+        while ($row = mysqli_fetch_array($res, MYSQLI_NUM)) {
+          echo "<div class='folder'>" . $row[0] . "</div>";
+        }
+      };
+      $res->free_result();
+      ?>
+    </div>
+    <?php
+    $conn = new mysqli('localhost', $user, $pass, $db) or die("Unable to connect");
+    $res = $conn->query('SELECT * FROM `datahands` WHERE UserID = "' . $UserID . '"');
     if (!$res) { //если ошибка - убиваем процесс и выводим сообщение об ошибке.
-      die(htmlspecialchars($db->error));
+      die(htmlspecialchars($conn->error));
     }
     while ($table = mysqli_fetch_row($res)) {
       $Deal = $table[2];
@@ -56,11 +72,11 @@ ob_start();
       #"<span class='line deal'>" . $table[2] . "</span>" . "<br>" . 
       // . '<br>' . "<span class='line comments'>" . $table[4] . "</span>" . '<br>' . "<span class='line date'>" . $table[5] . "</span>" . '<br>
     }
-    $db->close();
-    ob_end_flush();
+    $conn->close();
     ?>
   </div>
   <script src="handtoimage.js"></script>
+  <script src="folders.js"></script>
 </body>
 
 </html>
